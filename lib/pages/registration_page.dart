@@ -7,25 +7,36 @@ import '../auth/auth_service.dart';
 import 'launcher_page.dart';
 
 
-class LoginPage extends StatefulWidget {
-  static const String routeName = '/login';
-  const LoginPage({super.key});
+class RegistrationPage extends StatefulWidget {
+  static const String routeName = '/registration';
+  const RegistrationPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegistrationPage> createState() => _RegistrationPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegistrationPageState extends State<RegistrationPage> {
   final emailController = TextEditingController();
   final passController = TextEditingController();
+  final phoneController = TextEditingController();
+  final nameController = TextEditingController();
   final formKey = GlobalKey<FormState>();
   bool isObscureText = true;
   String errMsg = '';
-  
+
+  @override
+  void didChangeDependencies() {
+    phoneController.text = ModalRoute.of(context)!.settings.arguments as String;
+    // TODO: implement didChangeDependencies
+    super.didChangeDependencies();
+  }
+
   @override
   void dispose() {
     emailController.dispose();
     passController.dispose();
+    phoneController.dispose();
+    nameController.dispose();
     // TODO: implement dispose
     super.dispose();
   }
@@ -38,19 +49,6 @@ class _LoginPageState extends State<LoginPage> {
           child: ListView(
             padding: const EdgeInsets.symmetric(vertical: 100,horizontal: 20),
             children: [
-               Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: 150,
-                      width: 150,
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage('images/bag_for_login_page.png',),
-
-                      ),
-                    ),
-                  ],
-                ),
               Padding(
                 padding: const EdgeInsets.only(left: 8,top: 8,bottom: 20),
                 child: Column(
@@ -61,6 +59,39 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
               ),
+              TextFormField(
+                controller: nameController,
+                decoration: InputDecoration(
+                  hintText: 'Enter full Name',
+                  prefixIcon: Icon(Icons.person,
+                    color: Theme.of(context).primaryColor,),
+                  filled: true,
+                ),
+                validator: (value){
+                  if(value==null || value.isEmpty){
+                    return 'please enter a valid email address';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 10,),
+              TextFormField(
+                enabled: false,
+                controller: phoneController,
+                decoration: InputDecoration(
+                  hintText: 'Mobile Number',
+                  prefixIcon: Icon(Icons.phone,
+                    color: Theme.of(context).primaryColor,),
+                  filled: true,
+                ),
+                validator: (value){
+                  if(value==null || value.isEmpty){
+                    return 'please enter a valid email address';
+                  }
+                  return null;
+                },
+              ),
+              const SizedBox(height: 10,),
               TextFormField(
                 controller: emailController,
                 decoration: InputDecoration(
@@ -105,67 +136,8 @@ class _LoginPageState extends State<LoginPage> {
                   onPressed: (){
                     authenticate();
                   }, 
-                  child: const Text('LOGIN'),
+                  child: const Text('REGISTER'),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Forgot Password?',style: TextStyle(fontSize: 12),),
-                  TextButton(
-                    onPressed: (){}, 
-                    child: const Text('Click here...'),
-                  )
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('New User?',style: TextStyle(fontSize: 12),),
-                  TextButton(
-                    onPressed: (){
-                      Navigator.pushNamed(context, PhoneVerificationPage.routeName);
-                    },
-                    child: const Text('REGISTER'),
-                  )
-                ],
-              ),
-              const Center(child: Text('OR',style: TextStyle(fontSize: 14,color: Colors.deepPurple),)),
-              const SizedBox(height: 10,),
-               Row(
-                 mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Card(
-                      child: IconButton(
-                          onPressed: (){
-                            AuthService.signInWithGoogle().then((credential) {
-                              if(credential.user != null){
-                                Navigator.pushNamed(context, LauncherPage.routeName);
-                              }
-                            });
-                          },
-                          icon: Image.asset('images/icons_google.png'),
-
-                      ),
-                    ),
-                    Card(
-                      child: IconButton(
-                          onPressed: (){
-
-                          },
-                          icon: Image.asset('images/icons_facebook.png'),
-
-                      ),
-                    ),
-                    Card(
-                      child: IconButton(
-                          onPressed: (){
-
-                          },
-                          icon: Image.asset('images/icons_twitter.png'),
-                      ),
-                    ),
-                  ],
-                ),
 
               Text(errMsg,style: TextStyle(color: Theme.of(context).errorColor),)
             ],

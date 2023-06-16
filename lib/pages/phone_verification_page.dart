@@ -1,6 +1,9 @@
 
+import 'package:ecom_users/auth/auth_service.dart';
+import 'package:ecom_users/pages/registration_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 import '../utils/helper_function.dart';
@@ -18,6 +21,7 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
   final phoneController = TextEditingController();
   final otpController = TextEditingController();
   bool isFirst = true;
+  String vId = '';
 
   @override
   void dispose() {
@@ -95,14 +99,12 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
           enableActiveFill: true,
           //errorAnimationController: errorController,
           controller: otpController,
-          onCompleted: (v) {
-            print("Completed");
-          },
-          onChanged: (value) {
-            print(value);
-            setState(() {
 
-            });
+          onChanged: (value) {
+            if(value.length == 6 ){
+              EasyLoading.show(status: 'Please Wait');
+              sendOtp();
+            }
           },
 
         ),
@@ -118,11 +120,31 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
 
   void _verifyphone() async{
     await FirebaseAuth.instance.verifyPhoneNumber(
+      timeout: const Duration(seconds: 60),
       phoneNumber: phoneController.text,
       verificationCompleted: (PhoneAuthCredential credential) {},
-      verificationFailed: (FirebaseAuthException e) {},
-      codeSent: (String verificationId, int? resendToken) {},
-      codeAutoRetrievalTimeout: (String verificationId) {},
+      verificationFailed: (FirebaseAuthException e) {
+        showMsg(context, 'Code did not match');
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        vId = verificationId;
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+
+      },
     );
+  }
+
+  void sendOtp() {
+    PhoneAuthCredential credential = PhoneAuthProvider
+        .credential(verificationId: vId, smsCode: otpController.text);
+    FirebaseAuth.instance.signInWithCredential(credential)
+        .then((credentialUser) {
+          if(credentialUser != null){
+            EasyLoading.dismiss();
+            AuthService.logout();
+            Navigator.pushReplacementNamed(context, RegistrationPage.routeName,arguments: phoneController.text);
+          }
+    });
   }
 }

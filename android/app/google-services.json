@@ -1,0 +1,105 @@
+{
+  "project_info": {
+    "project_number": "249906511527",
+    "project_id": "rokomari-da34b",
+    "storage_bucket": "rokomari-da34b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249906511527:android:e24bd205de5f94bd6c6582",
+        "android_client_info": {
+          "package_name": "com.example.ecom_user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "249906511527-khbkfgmhd933nq0tbsii7sil0o0hcucp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.ecom_user",
+            "certificate_hash": "42c4a28e568841ebe6927b72c86a1ba76ba1cfd3"
+          }
+        },
+        {
+          "client_id": "249906511527-uq7nmqahtnard2a71qf7qld1he7hpvr2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeQWH2jU1ns2BnCUbeHPFTjRnqpPjExD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249906511527-fhskemj611si17totbn5iade3qi1c7h7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249906511527:android:28d36aae6f625f796c6582",
+        "android_client_info": {
+          "package_name": "com.example.ecom_users"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "249906511527-uq7nmqahtnard2a71qf7qld1he7hpvr2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeQWH2jU1ns2BnCUbeHPFTjRnqpPjExD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249906511527-fhskemj611si17totbn5iade3qi1c7h7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249906511527:android:1f161a29413ff9c66c6582",
+        "android_client_info": {
+          "package_name": "com.example.onno_rokom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "249906511527-uq7nmqahtnard2a71qf7qld1he7hpvr2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeQWH2jU1ns2BnCUbeHPFTjRnqpPjExD8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249906511527-fhskemj611si17totbn5iade3qi1c7h7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

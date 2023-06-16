@@ -5,6 +5,7 @@ import 'package:ecom_users/pages/login_page.dart';
 import 'package:ecom_users/pages/phone_verification_page.dart';
 import 'package:ecom_users/pages/product_details_page.dart';
 import 'package:ecom_users/pages/product_page.dart';
+import 'package:ecom_users/pages/registration_page.dart';
 import 'package:ecom_users/providers/order_provider.dart';
 import 'package:ecom_users/providers/product_porvider.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
         ProductPage.routeName: (_) => ProductPage(),
         ProductDetailsPage.routeName: (_) => ProductDetailsPage(),
         PhoneVerificationPage.routeName: (_) => PhoneVerificationPage(),
+        RegistrationPage.routeName: (_) => RegistrationPage(),
 
 
       },
