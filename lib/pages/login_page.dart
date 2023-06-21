@@ -1,7 +1,12 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecom_users/models/user_model.dart';
 import 'package:ecom_users/pages/phone_verification_page.dart';
+import 'package:ecom_users/providers/user_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:provider/provider.dart';
 
 import '../auth/auth_service.dart';
 import 'launcher_page.dart';
@@ -21,6 +26,7 @@ class _LoginPageState extends State<LoginPage> {
   final formKey = GlobalKey<FormState>();
   bool isObscureText = true;
   String errMsg = '';
+
   
   @override
   void dispose() {
@@ -137,9 +143,23 @@ class _LoginPageState extends State<LoginPage> {
                     Card(
                       child: IconButton(
                           onPressed: (){
-                            AuthService.signInWithGoogle().then((credential) {
+                            AuthService.signInWithGoogle().then((credential) async{
                               if(credential.user != null){
-                                Navigator.pushNamed(context, LauncherPage.routeName);
+                                if(!await Provider.of<UserProvider>(context,listen: false)
+                                    .doesUserExist(credential.user!.uid)){
+
+                                  EasyLoading.show(status: 'please wait',dismissOnTap: false);
+                                  final userModel = UserModel(
+                                      uid: credential.user!.uid,
+                                      email: credential.user!.email!,
+                                      name: credential.user!.displayName,
+                                      user_creationTime: Timestamp.fromDate(credential.user!.metadata.creationTime!));
+                                  await Provider.of<UserProvider>(context,listen: false)
+                                      .addUser(userModel);
+                                  EasyLoading.dismiss();
+                                }
+                                Navigator.pushReplacementNamed(context, LauncherPage.routeName);
+
                               }
                             });
                           },

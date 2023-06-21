@@ -1,15 +1,21 @@
 
 
+import 'package:ecom_users/pages/cart_page.dart';
+import 'package:ecom_users/pages/checkout_page.dart';
 import 'package:ecom_users/pages/launcher_page.dart';
 import 'package:ecom_users/pages/login_page.dart';
 import 'package:ecom_users/pages/phone_verification_page.dart';
 import 'package:ecom_users/pages/product_details_page.dart';
 import 'package:ecom_users/pages/product_page.dart';
 import 'package:ecom_users/pages/registration_page.dart';
+import 'package:ecom_users/pages/user_address_page.dart';
+import 'package:ecom_users/providers/cat_provider.dart';
 import 'package:ecom_users/providers/order_provider.dart';
 import 'package:ecom_users/providers/product_porvider.dart';
+import 'package:ecom_users/providers/user_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:provider/provider.dart';
 
 void main() async{
@@ -19,8 +25,11 @@ void main() async{
       providers: [
         ChangeNotifierProvider(create: (context)=>ProductProvider()),
         ChangeNotifierProvider(create: (context)=>OrderProvider()),
+        ChangeNotifierProvider(create: (context)=>UserProvider()),
+        ChangeNotifierProvider(create: (context)=>CartProvider()),
       ],
       child: const MyApp()));
+  EasyLoading.init();
 }
 
 class MyApp extends StatelessWidget {
@@ -46,6 +55,9 @@ class MyApp extends StatelessWidget {
         ProductDetailsPage.routeName: (_) => ProductDetailsPage(),
         PhoneVerificationPage.routeName: (_) => PhoneVerificationPage(),
         RegistrationPage.routeName: (_) => RegistrationPage(),
+        CartPage.routeName: (_) => CartPage(),
+        UserAddressPage.routeName: (_) => UserAddressPage(),
+        CheckOutPage.routeName: (_) => CheckOutPage(),
 
 
       },

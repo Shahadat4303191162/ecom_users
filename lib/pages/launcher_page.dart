@@ -2,6 +2,7 @@
 import 'package:ecom_users/pages/product_page.dart';
 import 'package:flutter/material.dart';
 
+
 import '../auth/auth_service.dart';
 import 'login_page.dart';
 
@@ -23,7 +24,6 @@ class _LauncherPageState extends State<LauncherPage> {
         Navigator.pushReplacementNamed(context, ProductPage.routeName);
       }
     });
-    // TODO: implement initState
     super.initState();
   }
   @override

@@ -59,6 +59,7 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
               filled: true,
             ),
           ),
+          const SizedBox(height: 20,),
           ElevatedButton(
               onPressed: (){
                 if(phoneController.text.isEmpty){
@@ -108,6 +109,7 @@ class _PhoneVerificationPageState extends State<PhoneVerificationPage> {
           },
 
         ),
+        const SizedBox(height: 20,),
         ElevatedButton(
           onPressed: (){
 

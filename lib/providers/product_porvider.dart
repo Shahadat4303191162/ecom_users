@@ -14,11 +14,15 @@ class ProductProvider extends ChangeNotifier{
 
   List<CategoryModel> categoryList = [];//object
   List<ProductModel> productList = [];
+  List<ProductModel> featuredProductList = [];
+  List<String> categoryNameList = [];
 
   getAllCategories(){
     DbHelper.getAllCategories().listen((snapshot){
       categoryList = List.generate(snapshot.docs.length, (index) =>
         CategoryModel.fromMap(snapshot.docs[index].data()));
+      categoryNameList = List.generate(categoryList.length, (index) => categoryList[index].name!);
+      categoryNameList.insert(0, 'All');
       notifyListeners();
     });
   }
@@ -32,14 +36,26 @@ class ProductProvider extends ChangeNotifier{
   }
 
 
+
+  getAllFeaturedProducts(){
+    DbHelper.getAllFeaturedProducts().listen((snapshot) {
+      featuredProductList = List.generate(snapshot.docs.length, (index) =>
+          ProductModel.fromMap(snapshot.docs[index].data()));
+      notifyListeners();
+    });
+  }
+
+
+  getAllProductsByCategory(String category){
+    DbHelper.getAllProductsByCategory(category).listen((snapshot) {
+      productList = List.generate(snapshot.docs.length, (index) =>
+          ProductModel.fromMap(snapshot.docs[index].data()));
+      notifyListeners();
+    });
+  }
+
+
   Stream<DocumentSnapshot<Map<String,dynamic>>> getProductById(String id) =>
     DbHelper.getProductById(id);
 
-  Future<String> updateImage(XFile xFile) async {
-    final imageName = DateTime.now().millisecondsSinceEpoch.toString();
-    final photoRef = FirebaseStorage.instance.ref().child('Pictures/$imageName');
-    final uploadTask = photoRef.putFile(File(xFile.path));
-    final snapshot = await uploadTask.whenComplete(() => null);
-    return snapshot.ref.getDownloadURL();
-  }
 }
