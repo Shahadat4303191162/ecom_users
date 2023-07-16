@@ -24,14 +24,18 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
 
   int? chipValue = 0;
+  bool isFirst = true;
 
   @override
   void didChangeDependencies() {
-    Provider.of<ProductProvider>(context,listen: false).getAllProducts();
-    Provider.of<ProductProvider>(context,listen: false).getAllCategories();
-    Provider.of<CartProvider>(context,listen: false).getCartByUser();
-    Provider.of<ProductProvider>(context,listen: false)
-        .getAllFeaturedProducts();
+    if(isFirst) {
+      Provider.of<ProductProvider>(context, listen: false).getAllProducts();
+      Provider.of<ProductProvider>(context, listen: false).getAllCategories();
+      Provider.of<CartProvider>(context, listen: false).getCartByUser();
+      Provider.of<ProductProvider>(context, listen: false)
+          .getAllFeaturedProducts();
+    }
+    isFirst = false;
     super.didChangeDependencies();
   }
 

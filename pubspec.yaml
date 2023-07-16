@@ -39,6 +39,7 @@ dependencies:
   firebase_auth:
   cloud_firestore:
   firebase_storage:
+  firebase_messaging:
   provider:
   intl:
   image_picker:
@@ -46,6 +47,7 @@ dependencies:
   pin_code_fields: ^7.4.0
   google_sign_in: ^6.1.4
   carousel_slider: ^4.2.1
+  flutter_rating_bar: ^4.0.1
 
 dev_dependencies:
   flutter_test:

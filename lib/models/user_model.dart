@@ -37,7 +37,8 @@ class UserModel {
       'mobile' : mobile,
       'email' : email,
       'image' : image,
-      'address' : address,
+      'address' : address?.toMap(),
+      //'address' : address,
       'deviceToken' : deviceToken,
       'userCreationTime' : user_creationTime,
     };
@@ -49,7 +50,8 @@ class UserModel {
     mobile: map['mobile'],
     email: map['email'],
     image: map['image'],
-    address: map['address'],
+    //address: AddressModel.fromMap(map['address']),
+    address: map['address'] ==null ? null : AddressModel.fromMap(map['address']),
     deviceToken: map['deviceToken'],
     user_creationTime: map['userCreationTime'],
   );

@@ -1,13 +1,16 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:ecom_users/auth/auth_service.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../db/dbhepler.dart';
+import '../models/cart_moder.dart';
 import '../models/category_model.dart';
 import '../models/product_model.dart';
+import '../models/rating_model.dart';
 
 
 class ProductProvider extends ChangeNotifier{
@@ -35,7 +38,8 @@ class ProductProvider extends ChangeNotifier{
     });
   }
 
-
+  Future<bool> canUserRate(String pid) =>
+    DbHelper.canUserRate(AuthService.user!.uid, pid);
 
   getAllFeaturedProducts(){
     DbHelper.getAllFeaturedProducts().listen((snapshot) {
@@ -57,5 +61,25 @@ class ProductProvider extends ChangeNotifier{
 
   Stream<DocumentSnapshot<Map<String,dynamic>>> getProductById(String id) =>
     DbHelper.getProductById(id);
+
+  Future<void> addRating(String pid, double value) async{
+    final ratingModel = RatingModel(
+      userId:AuthService.user!.uid,
+      productId: pid,
+      rating: value,
+    );
+    await DbHelper.addRating(ratingModel);
+    final qSnapshot = await DbHelper.getAllRatingByProduct(pid);    //qsnapshot ta je paici ta theke ekta ratingModel er list create kore nilam
+    var sumOfRating = 0.0;
+    final List<RatingModel> ratingList = 
+        List.generate(qSnapshot.docs.length, (index) =>               //ei khan theke return hobe ek ek ta rating model er object
+            RatingModel.fromMap(qSnapshot.docs[index].data()));
+
+    for (var ratingM in ratingList){
+      sumOfRating += ratingM.rating;
+    }
+    final avgRating = sumOfRating / ratingList.length;
+    return DbHelper.updateProduct(pid, {productRating : avgRating ,productRatingCount : ratingList.length });
+  }
 
 }

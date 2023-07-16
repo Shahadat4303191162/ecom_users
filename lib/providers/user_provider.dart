@@ -11,6 +11,7 @@ import 'package:image_picker/image_picker.dart';
 
 class UserProvider extends ChangeNotifier {
 
+  UserModel? userModel; //userModel nam e ekta proparty rakhlam
   List<CityModel> cityList = [];
 
   getAllCities(){
@@ -36,7 +37,7 @@ class UserProvider extends ChangeNotifier {
   Future<bool> doesUserExist(String uid) => DbHelper.doesUserExist(uid);
 
   Stream<DocumentSnapshot<Map<String,dynamic>>> getUserByUid(String uid) =>
-      DbHelper.getUserByUid(uid);
+      DbHelper.getUserByUid(uid);/*user Doc*/
 
   Future<void> updateProfile(String uid,Map<String,dynamic>map)=>
       DbHelper.updateProfile(uid,map);
