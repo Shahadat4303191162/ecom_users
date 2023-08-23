@@ -1,12 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecom_users/auth/auth_service.dart';
 import 'package:ecom_users/models/data_model.dart';
+import 'package:ecom_users/models/notification_model.dart';
 import 'package:ecom_users/models/order_model.dart';
 import 'package:ecom_users/models/user_model.dart';
 import 'package:ecom_users/pages/order_successful_page.dart';
 import 'package:ecom_users/pages/product_page.dart';
 import 'package:ecom_users/pages/user_address_page.dart';
 import 'package:ecom_users/providers/cat_provider.dart';
+import 'package:ecom_users/providers/notification_provider.dart';
 import 'package:ecom_users/providers/order_provider.dart';
 import 'package:ecom_users/providers/product_porvider.dart';
 import 'package:ecom_users/providers/user_provider.dart';
@@ -319,6 +321,13 @@ class _CheckOutPageState extends State<CheckOutPage> {
                       OrderSuccessfulPage.routeName, 
                       ModalRoute.withName(ProductPage.routeName))
             });
+            final notificationModel = NotificationModel(id: DateTime.now().millisecondsSinceEpoch.toString(),
+              type: NotificationType.order,
+              message: 'A new order has been place #${orderModel.orderId}',
+              orderModel: orderModel,
+            );
+            Provider.of<NotificationProvider>(context,listen: false)
+            .addNotification(notificationModel);
       });
     });
     // .catchError((error){

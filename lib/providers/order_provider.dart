@@ -41,14 +41,14 @@ class OrderProvider extends ChangeNotifier{
   }
 
   num getVatAmount(num subtotal){
-    final priceAfterDiscount = subtotal - getDiscountAmount(subtotal);
+    final priceAfterDiscount = subtotal - getDiscountAmount(subtotal).round();
     return (priceAfterDiscount * orderConstantsModel.vat)/100;
   }
 
   num getGrandTotal(num subtotal){
     final priceAfterDiscount = subtotal - getDiscountAmount(subtotal);
-    final vatAmount = getVatAmount(subtotal);
-    return vatAmount + orderConstantsModel.deliveryCharge + priceAfterDiscount;
+    final vatAmount = getVatAmount(subtotal).round();
+    return vatAmount + orderConstantsModel.deliveryCharge + priceAfterDiscount.round();
   }
 
 }

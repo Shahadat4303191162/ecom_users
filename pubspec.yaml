@@ -40,10 +40,11 @@ dependencies:
   cloud_firestore:
   firebase_storage:
   firebase_messaging:
+  flutter_local_notifications:
   provider:
   intl:
   image_picker:
-  flutter_easyloading: ^3.0.5
+  flutter_easyloading:
   pin_code_fields: ^7.4.0
   google_sign_in: ^6.1.4
   carousel_slider: ^4.2.1

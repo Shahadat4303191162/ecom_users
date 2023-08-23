@@ -12,3 +12,8 @@ abstract class OrderStatus{
   static const String delivered = 'Delivered';
   static const String cancelled = 'Cancelled';
 }
+abstract class NotificationType {
+  static const String comment = 'New Comment';
+  static const String order = 'New Order';
+  static const String user = 'New User';
+}

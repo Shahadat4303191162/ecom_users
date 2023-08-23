@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecom_users/models/cart_moder.dart';
+import 'package:ecom_users/models/notification_model.dart';
 import 'package:ecom_users/models/order_model.dart';
 import 'package:ecom_users/models/product_model.dart';
 import 'package:ecom_users/models/rating_model.dart';
@@ -26,6 +27,7 @@ class DbHelper{
   static const String collectionCities = 'Cities';
   static const String collectionOrderSettings = 'settings';
   static const String documentOrderConstant = 'orderConstant';
+  static const String collectionNotification = 'Notification';
   static final FirebaseFirestore _db = FirebaseFirestore.instance;
 
 
@@ -174,6 +176,10 @@ class DbHelper{
         .collection(collectionRating)
         .doc(ratingModel.userId)
         .set(ratingModel.toMap());
+  }
+
+  static Future<void> addNotification(NotificationModel notificationModel){
+    return _db.collection(collectionNotification).doc(notificationModel.id).set(notificationModel.toMap());
   }
 
 }
